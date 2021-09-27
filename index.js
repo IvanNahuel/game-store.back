@@ -2,15 +2,14 @@ class Usuario{
     constructor(nombre, apellido){
         this.nombre = nombre;
         this.apellido = apellido;
-        this.libros = [];       //obj[]
-        this.mascotas = [];    //string[]
+        this.libros = [];       
+        this.mascotas = [];    
     }
 
     getFullName(){
         return `${this.nombre} ${this.apellido}`; 
     }
 
-    //recibe el nombre de una mascota y lo añade al array de mascota
     addMascota(mascota){
 
         this.mascotas.push(mascota);
