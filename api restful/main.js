@@ -14,9 +14,9 @@ const obtenerProductos = async ()=>{
     return auxProductos;
 }
 
-app.get('/productos', (re, response)=>{
+app.get('/productos', async(re, response)=>{
     console.log("A");
-    response.send( obtenerProductos());
+    response.send( await obtenerProductos());
     console.log("B");
 });
 
