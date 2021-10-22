@@ -8,11 +8,14 @@ const test = async ()=>{
     console.log( await contenedor.save({title: 'Calculadora', price: 'sou', price: 234, thumbnail: "http://"}));
     console.log( await contenedor.save({title: 'Globo terraqueo', price: 'sou', price: 345, thumbnail: "http://"}));
     ¨*/
-
+    /*
     console.log( await contenedor.getById(1));
     console.log( await contenedor.getAll());
     console.log( await contenedor.deleteById(1));
     console.log( await contenedor.getAll());
     console.log( await contenedor.deleteAll());
+    */
+   //await contenedor.updateById(2, {title: 'tierra plana', price: 'cls', price: 200, thumbnail: "http://"})
+   await contenedor.deleteById(1);
 }
 test();

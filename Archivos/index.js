@@ -25,6 +25,23 @@ class Contenedor{
         return object.find(element => element.id === id);
     }
 
+    async updateById(id,object){
+        let newObject = { id: parseInt(id), ...object};
+        let listObjects = await this.getAll();
+
+        listObjects.splice((id-1), 1, newObject);
+
+        try
+        {
+            await fs.promises.writeFile(this.fileName, JSON.stringify(listObjects,null,4));        
+        }
+        catch (error)
+        {
+            throw new Error('No se pudo guardar el objeto');
+        }
+
+    }
+
     async getAll(){
         try
         {
@@ -41,7 +58,10 @@ class Contenedor{
 
     async deleteById(id){
         const object = await this.getAll();
-        const newArray = object.filter(element => element.id !== id);
+        console.log(id);
+        const newArray = object.filter((element) => element.id != id);
+        console.log("------------");
+        console.log(newArray);
         await fs.promises.writeFile(this.fileName, JSON.stringify(newArray,null,4));
         return id;
     }

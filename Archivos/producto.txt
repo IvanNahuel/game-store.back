@@ -1,14 +1,8 @@
 [
     {
-        "id": 1,
-        "title": "Escuadra",
-        "price": 123,
-        "thumbnail": "http://"
-    },
-    {
         "id": 2,
-        "title": "Calculadora",
-        "price": 234,
+        "title": "tierra plana",
+        "price": 200,
         "thumbnail": "http://"
     },
     {

@@ -16,5 +16,11 @@
         "title": "Globo terraqueo",
         "price": 345,
         "thumbnail": "http://"
+    },
+    {
+        "id": 4,
+        "title": "lapiceritas",
+        "price": 35,
+        "thumbnail": "http://"
     }
 ]

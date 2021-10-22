@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const Contenedor = require('../Archivos/index');
 
@@ -10,39 +11,54 @@ app.get('/',(req, response)=>{
 
 const obtenerProductos = async ()=>{
     let auxProductos = await contenedor.getAll()
-    console.log(auxProductos);
     return auxProductos;
 }
 
+const guardarProducto = async(objeto)=>{
+    await contenedor.save(objeto);
+    let productos = await obtenerProductos();
+    return productos[productos.length-1];
+}
+
+const guardarProductoPorId = async(id, objeto)=>{
+    await contenedor.updateById(id, objeto);
+}
+
 app.get('/productos', async(re, response)=>{
-    console.log("A");
     response.send( await obtenerProductos());
-    console.log("B");
 });
 
-/*
-app.get('/api/letras/:num',(req, response)=>{       
-    response.json({
-        result: frase[req.params.num],
-    });
-});*/
+app.get('/productos/:id', async (req, response)=>{
+    let productos = await obtenerProductos();
 
-app.get('/productos/:id',(req, response)=>{
-    //TO DO: en base al ID, buscamos y retornamos el deseado
-    //[req.params.num]    
-    /*
-    response.json({
-        result: 
-    });
-    */
-    //response.send( obtenerProductos());  
+    let retorno = productos.find(element => element.id ==  req.params.id);
+
+    if (retorno != undefined){
+        response.send( retorno);
+    }else{
+        response.send("No existe ese producto");
+    }
 });
 
-/* 
-TO DO : hacer el post y el put, el mensaje lo recibe a traves del req, y hacer un metodo 
-en el main que actualice esa data y updatee esa data
-UwU:D
- */
+app.use(express.json());    //esto es necesario para que nuestro post pueda recibir datos
+
+app.post('/api/productos',async (req, res)=>{
+    console.log('Post Requests recibido');
+    let respuesta = await guardarProducto(req.body);
+    res.send(respuesta);
+});
+
+app.put('/api/productos/:id', async (req, res)=>{
+    console.log("Put Requests recibido");
+    await guardarProductoPorId(req.params.id, req.body);    
+
+    res.send("producto actualizado");
+});
+
+app.delete('/api/productos/:id', async (req, res)=>{  
+    await contenedor.deleteById(req.params.id);
+    res.send("producto eliminado");
+});
 
 const server = app.listen(8080, ()=>{
     console.log(`contectado al puerto http://localhost:${server.address().port}`);

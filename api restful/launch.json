@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "http://localhost:8080/productos",
+            "request": "launch",
+            "url": "http://localhost:8080/productos",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program":"${workspaceFolder}\\main.js"
+        }
+    ]
+}
