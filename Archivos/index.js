@@ -28,18 +28,28 @@ class Contenedor{
     async updateById(id,object){
         let newObject = { id: parseInt(id), ...object};
         let listObjects = await this.getAll();
-
-        listObjects.splice((id-1), 1, newObject);
+        let retorno = {
+            mensaje: '',
+            response: {}
+        }
 
         try
         {
+            if ((id-1) < listObjects.length){
+                listObjects.splice((id-1), 1, newObject);
+                retorno.mensaje = 'Objeto actualizado correctamente';
+                retorno.response = object;
+            }else{
+                retorno.mensaje = 'no se pudo actualizar el objeto, asegurese que es objeto exista en la lista';
+                retorno.response = object;
+            }
             await fs.promises.writeFile(this.fileName, JSON.stringify(listObjects,null,4));        
         }
         catch (error)
         {
             throw new Error('No se pudo guardar el objeto');
         }
-
+        return retorno;
     }
 
     async getAll(){
@@ -58,12 +68,22 @@ class Contenedor{
 
     async deleteById(id){
         const object = await this.getAll();
-        console.log(id);
-        const newArray = object.filter((element) => element.id != id);
-        console.log("------------");
-        console.log(newArray);
-        await fs.promises.writeFile(this.fileName, JSON.stringify(newArray,null,4));
-        return id;
+        let response = {
+            mensaje: '',
+            response: {}
+        }
+
+        if((id) < object.length + 1 ){
+            response.response = await this.getById(id);
+            const newArray = object.filter((element) => element.id != id);
+            await fs.promises.writeFile(this.fileName, JSON.stringify(newArray,null,4));
+            response.mensaje = 'Producto eliminado'     
+            return response;
+        }else{
+            response.mensaje = 'Producto no encontrado';
+            response.response = {id: id};
+            return response;
+        }
     }
 
     async deleteAll(){
