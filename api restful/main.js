@@ -24,8 +24,19 @@ const guardarProductoPorId = async(id, objeto)=>{
     return await contenedor.updateById(id, objeto);
 }
 
-router.get('/',(req, response)=>{
-    response.send({mensaje:'Raiz principal'});
+app.use(express.urlencoded({extended:true}));
+app.set('views','./views');
+app.set('view engine','ejs');
+
+//RAIZ PRINCIPAL
+app.get('/',async (req, response)=>{
+    response.render('pages/index');
+});
+
+app.get('/productos',async (req, response)=>{
+    let productos = await obtenerProductos();
+    console.log(productos);
+    response.render('pages/productos',{productos});
 });
 
 router.get('/productos', async(re, response)=>{
@@ -55,9 +66,13 @@ app.use(express.json());    //esto es necesario para que nuestro post pueda reci
 router.post('/productos',async (req, res)=>{
     console.log('Post Requests recibido');
     let respuesta = await guardarProducto(req.body);
+    /*
     res.send({
         mensaje: 'Producto guardado correctamente',
         response: respuesta});
+        */
+    //response.render('pages/index',{productos});
+    res.redirect('/productos');
 });
 
 router.put('/productos/:id', async (req, res)=>{

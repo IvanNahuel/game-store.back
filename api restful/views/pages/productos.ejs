@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+</head>
+<body class="container">
+    <header>
+        <%- include('../partials/header') %>  
+    </header>
+    <main>        
+        <div class="jumbotron">
+            <% if(productos.length > 0){ %>
+                <% productos.forEach(function(producto){ %>
+                    <li>
+                        <strong> <%= producto.title %> </strong> <p>Precio: $<%= producto.price %> </p>            
+                    </li>
+                <% }); %>
+            <% } else { %>
+                <div>No hay productos para Mostrar!!</div>
+            <% } %>
+        </div>
+    </main>
+    <footer>
+        <%- include('../partials/footer') %>
+    </footer>
+
+</body>
+
+</html>
+

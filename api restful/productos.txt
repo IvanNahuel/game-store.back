@@ -22,5 +22,11 @@
         "title": "lapiceritas",
         "price": 35,
         "thumbnail": "http://"
+    },
+    {
+        "id": 5,
+        "title": "escuadras",
+        "price": "200",
+        "thumbnail": "https://"
     }
 ]
